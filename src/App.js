@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 const displayContext = React.createContext();
 
 function App() {
+  //Creating states and additing them to the context
   const [display, setDisplay] = useState(0);
   const [upperDisplay, setUpperDisplay] = useState();
   const [lastOperation, setLastOperation] = useState();
@@ -22,6 +23,7 @@ function App() {
   );
 }
 
+//Calculator component containing grid for the main UI
 function Calculator() {
   return (
     <div className="grid">
@@ -49,6 +51,7 @@ function Calculator() {
 }
 
 function Button({ children, big }) {
+  //exporting states from context
   const {
     display,
     setDisplay,
@@ -58,16 +61,19 @@ function Button({ children, big }) {
     setLastOperation,
   } = useContext(displayContext);
 
+  //tests if button is with number
   const isNumber = () => {
     return !isNaN(parseInt(children));
   };
 
+  //add number on display
   const addNumber = () => {
     setDisplay((prevState) =>
       prevState === 0 ? children : `${prevState}${children}`
     );
   };
 
+  //delete one number from display
   const del = () => {
     setDisplay((prevState) => {
       if (prevState !== 0) {
@@ -82,6 +88,7 @@ function Button({ children, big }) {
     });
   };
 
+  //add dot after number
   const dot = () => {
     setDisplay((prevState) => {
       if (prevState !== 0) {
@@ -92,12 +99,14 @@ function Button({ children, big }) {
     });
   };
 
+  //help function that moves number from main part up
   const moveUp = () => {
     setUpperDisplay(display + " " + children);
     setLastOperation(children);
     setDisplay(0);
   };
 
+  //this function does all the math
   const compute = () => {
     switch (lastOperation) {
       case "+":
@@ -114,6 +123,7 @@ function Button({ children, big }) {
     }
   };
 
+  //functions for the specific button operations
   const add = () => {
     if (upperDisplay) {
       setUpperDisplay(compute() + " +");
@@ -160,6 +170,7 @@ function Button({ children, big }) {
     }
   };
 
+  //handler fot the equal button
   const equals = () => {
     let result = compute();
     if (result === Infinity) {
@@ -170,6 +181,7 @@ function Button({ children, big }) {
     setUpperDisplay();
   };
 
+  //conection between button and its function
   const otherButtons = () => {
     switch (children) {
       case "AC":
@@ -221,6 +233,7 @@ function Button({ children, big }) {
   );
 }
 
+//display component showing input from context
 function Display() {
   const { display, upperDisplay } = useContext(displayContext);
 
