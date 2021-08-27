@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import GithubCorner from "react-github-corner";
 
 const displayContext = React.createContext();
 
@@ -17,9 +18,12 @@ function App() {
   };
 
   return (
-    <displayContext.Provider value={value}>
-      <Calculator />;
-    </displayContext.Provider>
+    <>
+      <displayContext.Provider value={value}>
+        <Calculator />
+      </displayContext.Provider>
+      <GithubCorner href="https://github.com/KmanCZ/React-Calculator" />
+    </>
   );
 }
 
